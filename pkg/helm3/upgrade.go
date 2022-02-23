@@ -46,7 +46,7 @@ func (m *Mixin) Upgrade() error {
 		return err
 	}
 
-	kubeClient, err := m.getKubernetesClient("/root/.kube/config")
+	kubeClient, err := m.getKubernetesClient()
 	if err != nil {
 		return errors.Wrap(err, "couldn't get kubernetes client")
 	}
