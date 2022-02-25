@@ -2,6 +2,7 @@ package helm3
 
 import (
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/pkg/errors"
@@ -14,13 +15,18 @@ func getSecret(client kubernetes.Interface, namespace, name, key string) ([]byte
 	if namespace == "" {
 		namespace = "default"
 	}
+	fmt.Fprintf(os.Stderr, "Retrieving secret %s/%s.%s\n", namespace, name, key)
 	secret, err := client.CoreV1().Secrets(namespace).Get(name, metav1.GetOptions{})
 	if apierrors.IsNotFound(err) {
 		return nil, fmt.Errorf("error getting secret %s from namespace %s: %s", name, namespace, err)
 	}
 	val, ok := secret.Data[key]
 	if !ok {
-		return nil, fmt.Errorf("couldn't find key %s in secret", key)
+		keys := make([]string, len(secret.Data))
+		for k := range secret.Data {
+			keys = append(keys, k)
+		}
+		return nil, fmt.Errorf("couldn't find key %s in secret %s/%s. Available keys are: %s", key, namespace, name, strings.Join(keys, ", "))
 	}
 	return val, nil
 }
