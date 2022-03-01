@@ -37,7 +37,7 @@ RUN curl -o kubectl https://storage.googleapis.com/kubernetes-release/release/v1
 		require.NoError(t, err, "build failed")
 
 		wantOutput := fmt.Sprintf(buildOutput, m.HelmClientVersion, m.HelmClientPlatfrom, m.HelmClientArchitecture) +
-			`USER nonroot
+			`USER ${UID}
 RUN helm3 repo add stable kubernetes-charts
 RUN helm3 repo update
 USER root
@@ -58,7 +58,7 @@ USER root
 		require.NoError(t, err, "build failed")
 
 		wantOutput := fmt.Sprintf(buildOutput, m.HelmClientVersion, m.HelmClientPlatfrom, m.HelmClientArchitecture) +
-			`USER nonroot
+			`USER ${UID}
 RUN helm3 repo add harbor https://helm.getharbor.io
 RUN helm3 repo add jetstack https://charts.jetstack.io
 RUN helm3 repo add stable kubernetes-charts
@@ -80,7 +80,7 @@ USER root
 		err = m.Build()
 		require.NoError(t, err, "build failed")
 		wantOutput := fmt.Sprintf(buildOutput, m.HelmClientVersion, m.HelmClientPlatfrom, m.HelmClientArchitecture) +
-			`USER nonroot
+			`USER ${UID}
 RUN helm3 repo update
 USER root
 `

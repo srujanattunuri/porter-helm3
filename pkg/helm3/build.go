@@ -85,8 +85,8 @@ func (m *Mixin) Build() error {
 	fmt.Fprintf(m.Out, "\nRUN curl -o kubectl https://storage.googleapis.com/kubernetes-release/release/v1.22.1/bin/linux/amd64/kubectl &&\\")
 	fmt.Fprintf(m.Out, "\n    mv kubectl /usr/local/bin && chmod a+x /usr/local/bin/kubectl\n")
 	if len(input.Config.Repositories) > 0 {
-		// Switch to the nonroot user so helm is configured for it and not root
-		fmt.Fprintln(m.Out, "USER nonroot")
+		// Switch to a non-root user so helm is configured for the user the container will execute as
+		fmt.Fprintln(m.Out, "USER ${UID}")
 
 		// Go through repositories
 		names := make([]string, 0, len(input.Config.Repositories))
