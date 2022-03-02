@@ -86,7 +86,7 @@ func (m *Mixin) Build() error {
 	fmt.Fprintf(m.Out, "\n    mv kubectl /usr/local/bin && chmod a+x /usr/local/bin/kubectl\n")
 	if len(input.Config.Repositories) > 0 {
 		// Switch to a non-root user so helm is configured for the user the container will execute as
-		fmt.Fprintln(m.Out, "USER ${UID}")
+		fmt.Fprintln(m.Out, "USER ${BUNDLE_USER}")
 
 		// Go through repositories
 		names := make([]string, 0, len(input.Config.Repositories))
