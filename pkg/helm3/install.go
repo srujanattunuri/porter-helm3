@@ -105,7 +105,7 @@ func (m *Mixin) Install() error {
 	// This will ensure the installation process deletes the installation on failure.
 	cmd.Args = append(cmd.Args, "--atomic")
 	// This will ensure the creation of the release namespace if not present.
-	cmd.Args = append(cmd.Args, "--create-namespace")
+	// cmd.Args = append(cmd.Args, "--create-namespace")
 	// Set values
 	cmd.Args = HandleSettingChartValuesForInstall(step, cmd)
 

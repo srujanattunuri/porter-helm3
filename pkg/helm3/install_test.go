@@ -61,7 +61,7 @@ func TestMixin_Install(t *testing.T) {
 	baseInstall := fmt.Sprintf(`helm3 upgrade --install %s %s --namespace %s --version %s`, name, chart, namespace, version)
 	baseValues := `--values /tmp/val1.yaml --values /tmp/val2.yaml`
 	baseSetArgs := `--set baz=qux --set foo=bar`
-	baseAddFlags := `--atomic --create-namespace`
+	baseAddFlags := `--atomic`
 
 	installTests := []InstallTest{
 		{

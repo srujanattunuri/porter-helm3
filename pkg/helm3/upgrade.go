@@ -100,7 +100,7 @@ func (m *Mixin) Upgrade() error {
 	// This will upgrade process rolls back changes made in case of failed upgrade.
 	cmd.Args = append(cmd.Args, "--atomic")
 	// This will ensure the creation of the release namespace if not present.
-	cmd.Args = append(cmd.Args, "--create-namespace")
+	// cmd.Args = append(cmd.Args, "--create-namespace")
 
 	cmd.Args = HandleSettingChartValuesForUpgrade(step, cmd)
 
